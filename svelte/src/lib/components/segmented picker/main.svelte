@@ -44,6 +44,7 @@
 		text-align: center;
 		margin: 2px;
 		padding: 0.45em 0.2em;
+		cursor: pointer;
 	}
 
 	.horizontal-segmented-picker button.selected {
