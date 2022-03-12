@@ -75,8 +75,10 @@ meter {
     -webkit-user-drag: element;
 }
 
-html {
+:root {
     font-family: Arial, Helvetica, sans-serif;
+
+    --horizontal-safe-area: 1rem;
 }
 
 h1 {

@@ -1,5 +1,8 @@
-<script>
+<script lang="ts">
 	import sloganNl from '$lib/assets/images/slogan/nl.jpg';
+	import SegmentedPicker from '$lib/components/segmented picker/main.svelte'
+
+	let selectedDay = 'Zat'
 </script>
 
 <nav>
@@ -12,49 +15,33 @@
 
 <section class="program-overview">
 	<div class="day-picker">
-		<div class="horizontal-segmented-picker">
-			<button>Vr</button>
-			<button class="selected">Zat</button>
-			<button>Zon</button>	
-		</div>
+		<SegmentedPicker
+			elements={['Vr', 'Zat', 'Zon']}
+			bind:selected={selectedDay}
+		/>
+	</div>
+
+	<div class="schedule">
+		<h4>{selectedDay} @ 18:00</h4>
 	</div>
 </section>
 
 <style>
 	nav {
-		padding: 0.7em 1em;
+		padding: 0.7em var(--horizontal-safe-area);
 	}
 
 	section.slogan {
 		text-align: center;
-		padding: 3em 1em;
+		padding: 3em var(--horizontal-safe-area);
 		background-color: #f79f1b;
 	}
 
 	.day-picker {
-		padding: 0 1em;
+		padding: 0 var(--horizontal-safe-area);
 	}
 
-	.horizontal-segmented-picker {
-		display: flex;
-		margin: 0.7em 0;
-		background-color: rgba(0, 0, 0, 0.07);
-		border-radius: 8px;
-		font-size: 13px;
-		overflow: hidden;
-		font-weight: 600;
-	}
-
-	.horizontal-segmented-picker button {
-		flex-grow: 1;
-		text-align: center;
-		margin: 2px;
-		padding: 0.45em 0.2em;
-	}
-
-	.horizontal-segmented-picker button.selected {
-		background-color: white;
-		border-radius: 6px;
-		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.11);
+	.program-overview .schedule h4 {
+		padding: 0 var(--horizontal-safe-area);
 	}
 </style>
