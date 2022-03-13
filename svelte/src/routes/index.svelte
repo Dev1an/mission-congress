@@ -1,13 +1,12 @@
 <script lang="ts">
 	import sloganNl from '$lib/assets/images/slogan/nl.jpg';
-	import SegmentedPicker from '$lib/components/segmented picker/main.svelte'
+	import SegmentedPicker from '$lib/components/Segmented picker.svelte'
+	import NavigationBar from '$lib/components/Navigation bar.svelte'
 
 	let selectedDay = 'Vr'
 </script>
 
-<nav>
-	<h3>Missie congres</h3>
-</nav>
+<NavigationBar />
 
 <section class="slogan">
 	<img src={sloganNl} alt="">
@@ -38,12 +37,6 @@
 </section>
 
 <style>
-	nav {
-		padding: 0.7em var(--horizontal-safe-area);
-		padding-left: max(var(--horizontal-safe-area), env(safe-area-inset-left));
-		padding-right: max(var(--horizontal-safe-area), env(safe-area-inset-right));
-	}
-
 	section.slogan {
 		text-align: center;
 		padding: 3em var(--horizontal-safe-area);
