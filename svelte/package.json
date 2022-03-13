@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.19.1",
-    "@sveltejs/adapter-auto": "next",
+    "@sveltejs/adapter-static": "next",
     "@sveltejs/kit": "next",
     "svelte": "^3.44.0",
     "svelte-check": "^2.2.6",
