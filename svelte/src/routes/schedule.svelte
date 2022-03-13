@@ -17,7 +17,6 @@
 	import { formatMinutes } from '$lib/util/moment';
 
 	export let scheduleEntries: ScheduleEntry[]
-	console.log(scheduleEntries)
 
 	function formatMetaData(entry: ScheduleEntry['content']) {
 		const data = []
