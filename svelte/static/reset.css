@@ -3,6 +3,12 @@
 button {
     -webkit-appearance: none;
     border: none;
+    all: unset;
+}
+
+a:any-link {
+    color: inherit;
+    text-decoration: inherit;
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
