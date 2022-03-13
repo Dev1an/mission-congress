@@ -14,30 +14,30 @@
 <script lang="ts">
 	import type { ScheduleEntry } from '$lib/content/Schedule entry/descriptor';
 	import NavigationBar from "$lib/components/Navigation bar.svelte";
+	import { formatMinutes } from '$lib/util/moment';
 
 	export let scheduleEntries: ScheduleEntry[]
-
 	console.log(scheduleEntries)
+
+	function formatMetaData(entry: ScheduleEntry['content']) {
+		const data = []
+		data.push(entry.type.fields.name)
+		if (entry.theme) data.push(entry.type.fields.name)
+		data.push(formatMinutes(entry.durationInMinutes))
+		return data.join(' • ')
+	}
 </script>
 
 <NavigationBar />
 
 <div class="schedule">
 	<div class="time-indicator">19:00 <span class=day>- Vrijdag</span></div>
-	<a href="https://google.com">
-		<p class="title">Comment mettre sa créativité artistique au service de l'Annonce de l'Evangile ?</p>
-		<p class="secondary">Culture • Workshop • 50 min</p>
-	</a>
-	<a href="https://google.com">
-		<p class="title">De Kerk in een geseculariseerde samenleving</p>
-		<p class="secondary">Panelgesprek • 50 min • Basiliek van Koekelberg</p>
-	</a>
-	<a href="https://google.com">
-		<p>Hello schedule!</p>
-	</a>
-	<a href="https://google.com">
-		<p>Hello schedule!</p>
-	</a>
+	{#each scheduleEntries as entry}
+		<a href="event/{entry.meta.id}">
+			<p class="title">{entry.content.title}</p>
+			<p class="secondary">{formatMetaData(entry.content)}</p>
+		</a>
+	{/each}
 </div>
 
 <style>

@@ -2,8 +2,17 @@
 	import sloganNl from '$lib/assets/images/slogan/nl.jpg';
 	import SegmentedPicker from '$lib/components/Segmented picker.svelte'
 	import NavigationBar from '$lib/components/Navigation bar.svelte'
+	import { prefetch } from '$app/navigation';
+	import { browser } from '$app/env';
 
 	let selectedDay = 'Vr'
+
+	if (browser)
+		setTimeout(prefetchSchedule, 200)
+
+	function prefetchSchedule() {
+		prefetch('/schedule').then(() => console.log('schedule prefetched'))
+	}
 </script>
 
 <NavigationBar />

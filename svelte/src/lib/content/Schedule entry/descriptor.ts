@@ -1,21 +1,21 @@
+import type { Entry, Sys } from "contentful"
+
 type ScheduleEntryBase = {
     title: string,
     durationInMinutes: number,
     dutch: boolean,
     french: boolean,
+    type: Entry<{name: string}>,
+    theme?: Entry<{name: string}>
 }
 
 export type RawScheduleEntry = ScheduleEntryBase & {
     startTime: string,
 }
 
-export type ScheduleEntry = ScheduleEntryBase & {
-    startTime: Date,
-}
-
-export function hydrateScheduleEntry(description: {fields: RawScheduleEntry}): ScheduleEntry {
-    return {
-        ...description.fields,
-        startTime: new Date(description.fields.startTime)
-    }
+export type ScheduleEntry = {
+    content: ScheduleEntryBase & {
+        startTime: Date,
+    },
+    meta: Sys
 }

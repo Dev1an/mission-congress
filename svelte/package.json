@@ -23,6 +23,7 @@
   },
   "type": "module",
   "dependencies": {
-    "contentful": "^9.1.13"
+    "contentful": "^9.1.13",
+    "moment": "^2.29.1"
   }
 }
