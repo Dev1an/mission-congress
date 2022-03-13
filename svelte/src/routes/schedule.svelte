@@ -1,28 +1,19 @@
 <script lang="ts" context="module">
 	import type { Load } from '.'
-	import { accessTokenProperty, masterURL, contentTypes } from '$lib/content/endpoint';
-	import { hydrateScheduleEntry } from '$lib/content/ScheduleEntry';
+	import { getAllScheduleEntries } from "$lib/content/Schedule entry/queries";
 
 	export async function load({ params, fetch, session, stuff }: Parameters<Load>[0]) {
-		const contentTypeQuery = `content_type=${contentTypes.ScheduleEntry}`
-		const unlimit = 'limit=1000'
-		const url = `${masterURL}/entries?${accessTokenProperty}&${contentTypeQuery}&${unlimit}`
-		const response = await fetch(url);
-		const json = (await response.json())
-		const hydratedItems = json.items.map(hydrateScheduleEntry)
-
 		return {
-			status: response.status,
 			props: {
-				scheduleEntries: response.ok && hydratedItems
+				scheduleEntries: await getAllScheduleEntries()
 			}
 		};
 	}
 </script>
 
 <script lang="ts">
+	import type { ScheduleEntry } from '$lib/content/Schedule entry/descriptor';
 	import NavigationBar from "$lib/components/Navigation bar.svelte";
-	import type { ScheduleEntry } from '$lib/content/ScheduleEntry';
 
 	export let scheduleEntries: ScheduleEntry[]
 
