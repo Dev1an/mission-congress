@@ -1,5 +1,32 @@
+<script lang="ts" context="module">
+	import type { Load } from '.'
+	import { accessTokenProperty, masterURL, contentTypes } from '$lib/content/endpoint';
+	import { hydrateScheduleEntry } from '$lib/content/ScheduleEntry';
+
+	export async function load({ params, fetch, session, stuff }: Parameters<Load>[0]) {
+		const contentTypeQuery = `content_type=${contentTypes.ScheduleEntry}`
+		const unlimit = 'limit=1000'
+		const url = `${masterURL}/entries?${accessTokenProperty}&${contentTypeQuery}&${unlimit}`
+		const response = await fetch(url);
+		const json = (await response.json())
+		const hydratedItems = json.items.map(hydrateScheduleEntry)
+
+		return {
+			status: response.status,
+			props: {
+				scheduleEntries: response.ok && hydratedItems
+			}
+		};
+	}
+</script>
+
 <script lang="ts">
 	import NavigationBar from "$lib/components/Navigation bar.svelte";
+	import type { ScheduleEntry } from '$lib/content/ScheduleEntry';
+
+	export let scheduleEntries: ScheduleEntry[]
+
+	console.log(scheduleEntries)
 </script>
 
 <NavigationBar />
@@ -37,6 +64,7 @@
 		padding-right: max(var(--horizontal-safe-area), env(safe-area-inset-right));
 
 		font-weight: bold;
+		font-size: 16px;
 
 		color: rgba(0, 0, 0, 0.644);
 		background-color: #FAFAFA;
