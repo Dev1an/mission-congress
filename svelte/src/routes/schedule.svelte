@@ -4,10 +4,6 @@
 
 <NavigationBar />
 
-<div class="search-row">
-	<input type="text" placeholder="Search">
-</div>
-
 <div class="schedule">
 	<div class="time-indicator">19:00 <span class=day>- Vrijdag</span></div>
 	<a href="https://google.com">
@@ -27,26 +23,6 @@
 </div>
 
 <style>
-	.search-row {
-		padding: 0 var(--horizontal-safe-area) 0.7em;
-		padding-left:  max(var(--horizontal-safe-area), env(safe-area-inset-left));
-		padding-right: max(var(--horizontal-safe-area), env(safe-area-inset-right));
-
-		display: flex;
-	}
-
-	input {
-		flex-grow: 1;
-		padding: 0.4em 0.6em;
-
-		background-color: rgba(0, 0, 0, 0.08);
-		border-radius: 8px;
-	}
-
-	input::placeholder {
-		color:rgba(0, 0, 0, 0.4);
-	}
-
 	.schedule {
 		position: relative;
 		font-size: 18px;
