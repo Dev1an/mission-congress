@@ -11,7 +11,9 @@ moment.locale('my-nl', {
         hh: '%d uur',
         d: 'één dag',
         dd: '%d dagen',
-    }
+    },
+    weekdays: 'zondag_maandag_dinsdag_woensdag_donderdag_vrijdag_zaterdag'.split('_'),
+    weekdaysMin: 'Zo_Ma_Di_Wo_Do_Vr_Za'.split('_'),
 })
 
 export function formatMinutes(minutes: number): string {

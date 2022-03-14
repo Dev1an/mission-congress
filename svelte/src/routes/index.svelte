@@ -1,12 +1,17 @@
 <script lang="ts" context="module">	
 	import type { Load } from '.'
 	import moment from 'moment'
+	import '$lib/util/moment'
 	import { getAllChapters, type Chapter } from '$lib/content/Schedule chapters'
+	import { days } from '$lib/util/march2022congresDays';
 
 	export async function load({ params, fetch, session, stuff }: Parameters<Load>[0]) {
+		const now = new Date()
+
 		return {
 			props: {
-				chapters: (await getAllChapters()).map(hydrate)
+				chapters: (await getAllChapters()).map(hydrate),
+				selectedDay: days.find(day => day.contains(now)) || days[0]
 			}
 		}
 	}
@@ -32,9 +37,22 @@
 	import sloganNl from '$lib/assets/images/slogan/nl.jpg';
 	import SegmentedPicker from '$lib/components/Segmented picker.svelte'
 	import NavigationBar from '$lib/components/Navigation bar.svelte'
+	import type { TimeRange } from '$lib/util/date';
 
-	let selectedDay = 'Vr'
+	export let selectedDay: TimeRange
 	export let chapters: HydratedChapter[]
+
+	let filteredChapters: HydratedChapter[]
+
+	$: updateFilteredChapters(selectedDay)
+
+	function updateFilteredChapters(...args: any[]) {
+		filteredChapters = chapters.filter(isOnSelectedDay)
+	}
+
+	function isOnSelectedDay(chapter: HydratedChapter): boolean {
+		return selectedDay.contains(chapter.startTime)
+	}
 
 	if (browser)
 		setTimeout(prefetchSchedule, 200)
@@ -53,13 +71,14 @@
 <section class="program-overview">
 	<div class="day-picker">
 		<SegmentedPicker
-			elements={['Vr', 'Zat', 'Zon']}
+			elements={days}
 			bind:selected={selectedDay}
+			content={day => ({ content: moment(day.mid).format('dd') })}
 		/>
 	</div>
 
 	<div class="schedule">
-		{#each chapters as chapter}
+		{#each filteredChapters as chapter}
 			<a href={chapter.href}>
 				<div>
 					{chapter.formattedTime}
