@@ -1,4 +1,4 @@
-import moment, { min } from 'moment'
+import moment from 'moment'
 moment.locale('my-nl', {
     relativeTime: {
         future: 'over %s',

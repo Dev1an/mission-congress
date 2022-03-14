@@ -1,12 +1,26 @@
 <script lang="ts" context="module">	
 	import type { Load } from '.'
-	import { getAllChapters } from '$lib/content/Schedule chapter/queries';
+	import moment from 'moment'
+	import { getAllChapters, type Chapter } from '$lib/content/Schedule chapters'
 
 	export async function load({ params, fetch, session, stuff }: Parameters<Load>[0]) {
 		return {
 			props: {
-				chapters: await getAllChapters()
+				chapters: (await getAllChapters()).map(hydrate)
 			}
+		}
+	}
+
+	type HydratedChapter = Chapter & {
+		formattedTime: string,
+		href: string
+	}
+
+	function hydrate(chapter: Chapter): HydratedChapter {
+		return {
+			...chapter,
+			formattedTime: moment(chapter.startTime).format('H:mm'),
+			href: chapter.eventID ? `/event/${chapter.eventID}` : '/schedule'
 		}
 	}
 </script>
@@ -14,16 +28,13 @@
 <script lang="ts">
 	import { prefetch } from '$app/navigation';
 	import { browser } from '$app/env';
-	import moment from 'moment'
-	import type { Chapter } from '$lib/content/Schedule chapter/queries';
 
 	import sloganNl from '$lib/assets/images/slogan/nl.jpg';
 	import SegmentedPicker from '$lib/components/Segmented picker.svelte'
 	import NavigationBar from '$lib/components/Navigation bar.svelte'
 
 	let selectedDay = 'Vr'
-	export let chapters: Chapter[]
-
+	export let chapters: HydratedChapter[]
 
 	if (browser)
 		setTimeout(prefetchSchedule, 200)
@@ -49,9 +60,9 @@
 
 	<div class="schedule">
 		{#each chapters as chapter}
-			<a href="/schedule">
+			<a href={chapter.href}>
 				<div>
-					{moment(chapter.startTime).format('H:mm')}
+					{chapter.formattedTime}
 					{#if chapter.location}
 						<span class=secondary>- {chapter.location.fields.name}</span>
 					{/if}

@@ -1,7 +1,7 @@
 import type { Entry } from "contentful";
-import { client } from "../client";
-import { contentTypes } from "../Endpoint description";
-import type { ILocation, IScheduleChapterFields } from "../schema";
+import { client } from "./client";
+import { contentTypes } from "./Endpoint description";
+import type { ILocation, IScheduleChapterFields } from "./schema";
 
 export type Chapter = {
     startTime: Date,
