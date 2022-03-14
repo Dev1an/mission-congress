@@ -1,11 +1,29 @@
+<script lang="ts" context="module">	
+	import type { Load } from '.'
+	import { getAllChapters } from '$lib/content/Schedule chapter/queries';
+
+	export async function load({ params, fetch, session, stuff }: Parameters<Load>[0]) {
+		return {
+			props: {
+				chapters: await getAllChapters()
+			}
+		}
+	}
+</script>
+
 <script lang="ts">
+	import { prefetch } from '$app/navigation';
+	import { browser } from '$app/env';
+	import moment from 'moment'
+	import type { Chapter } from '$lib/content/Schedule chapter/queries';
+
 	import sloganNl from '$lib/assets/images/slogan/nl.jpg';
 	import SegmentedPicker from '$lib/components/Segmented picker.svelte'
 	import NavigationBar from '$lib/components/Navigation bar.svelte'
-	import { prefetch } from '$app/navigation';
-	import { browser } from '$app/env';
 
 	let selectedDay = 'Vr'
+	export let chapters: Chapter[]
+
 
 	if (browser)
 		setTimeout(prefetchSchedule, 200)
@@ -30,18 +48,17 @@
 	</div>
 
 	<div class="schedule">
-		<a href="/schedule">
-			<div>19:00 <span class=secondary>- Basiliek van Koekelberg</span></div>
-			<h4>Welkom en registratie</h4>
-		</a>
-		<a href="/schedule">
-			<div>20:00 <span class=secondary>- Basiliek van Koekelberg</span></div>
-			<h4>Openingsavond van het missiecongres</h4>
-		</a>
-		<a href="/schedule">
-			<div>22:30 <span class=secondary>- School: Notre-Dame de la Sagesse</span></div>
-			<h4>Bar</h4>
-		</a>
+		{#each chapters as chapter}
+			<a href="/schedule">
+				<div>
+					{moment(chapter.startTime).format('H:mm')}
+					{#if chapter.location}
+						<span class=secondary>- {chapter.location.fields.name}</span>
+					{/if}
+				</div>
+				<h4>{chapter.title}</h4>
+			</a>			
+		{/each}
 	</div>
 </section>
 

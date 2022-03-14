@@ -1,0 +1,17 @@
+{
+  "name": "create-typescript-definitions-for-mission-congress",
+  "version": "1.0.0",
+  "description": "Create typescript definitions for mission congress svelte project",
+  "main": "getContentfulEnvironment.js",
+  "dependencies": {
+    "contentful-management": "^8.2.0",
+    "contentful-typescript-codegen": "^3.2.3",
+    "prettier": "^2.5.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "typegen": "contentful-typescript-codegen --output ../svelte/src/lib/content/schema.d.ts"
+  },
+  "author": "",
+  "license": "ISC"
+}
