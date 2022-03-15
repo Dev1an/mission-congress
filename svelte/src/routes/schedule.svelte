@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
 	import type { Load } from '.'
-	import { getAllScheduleEntries, type ScheduleEntry } from "$lib/content/Schedule entries";
+	import { getAllScheduleEntries } from "$lib/content/Schedule entries";
 
 	export async function load({ params, fetch, session, stuff }: Parameters<Load>[0]) {
 		return {
@@ -14,6 +14,7 @@
 <script lang="ts">
 	import NavigationBar from "$lib/components/Navigation bar.svelte";
 	import { formatMinutes } from '$lib/util/moment';
+	import type { ScheduleEntry } from '$lib/content/Event';
 
 	export let scheduleEntries: ScheduleEntry[]
 

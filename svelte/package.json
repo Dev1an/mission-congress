@@ -23,6 +23,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@contentful/rich-text-html-renderer": "^15.11.1",
     "contentful": "^9.1.13",
     "moment": "^2.29.1"
   }

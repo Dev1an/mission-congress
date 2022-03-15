@@ -12,8 +12,9 @@ moment.locale('my-nl', {
         d: 'één dag',
         dd: '%d dagen',
     },
-    weekdays: 'zondag_maandag_dinsdag_woensdag_donderdag_vrijdag_zaterdag'.split('_'),
+    weekdays: 'Zondag_Maandag_Dinsdag_Woensdag_Donderdag_Vrijdag_Zaterdag'.split('_'),
     weekdaysMin: 'Zo_Ma_Di_Wo_Do_Vr_Za'.split('_'),
+    months: 'januari_februari_maart_april_mei_juni_juli_augustus_september_oktober_november_december'.split('_')
 })
 
 export function formatMinutes(minutes: number): string {
