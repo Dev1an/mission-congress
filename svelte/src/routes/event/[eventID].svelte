@@ -18,7 +18,7 @@
     import { getEvent, type ScheduleEntry } from '$lib/content/Event'
     import moment from 'moment'
     import '$lib/util/moment'
-    import ProfilePicture from "./profile picture.svelte"
+    import ProfilePicture from "./_profile picture.svelte"
 
     export let event: ScheduleEntry
     export let htmlDescription: string
