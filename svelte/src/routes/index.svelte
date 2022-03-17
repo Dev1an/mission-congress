@@ -25,7 +25,9 @@
 		return {
 			...chapter,
 			formattedTime: moment(chapter.fields.startTime).format('H:mm'),
-			href: chapter.sys.contentType.sys.id == 'scheduleEntry' ? `/event/${chapter.sys.id}` : '/schedule'
+			href: chapter.sys.contentType.sys.id == 'scheduleEntry' ?
+				`/event/${chapter.sys.id}` :
+				`/schedule#${idFrom(chapter.fields.start)}`
 		}
 	}
 </script>
@@ -38,6 +40,7 @@
 	import SegmentedPicker from '$lib/components/Segmented picker.svelte'
 	import NavigationBar from '$lib/components/Navigation bar.svelte'
 	import type { TimeRange } from '$lib/util/date';
+import { idFrom } from '$lib/util/group entries';
 
 	export let selectedDay: TimeRange
 	export let chapters: HydratedChapter[]

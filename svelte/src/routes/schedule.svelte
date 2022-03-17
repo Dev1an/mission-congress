@@ -15,8 +15,13 @@
 	import NavigationBar from "$lib/components/Navigation bar.svelte";
 	import { formatMinutes } from '$lib/util/moment';
 	import type { ScheduleEntry } from '$lib/content/Event';
+	import { group, idFrom } from '$lib/util/group entries';
+	import moment from 'moment';
+	import '$lib/util/moment'
 
 	export let scheduleEntries: ScheduleEntry[]
+
+	const groups = group(scheduleEntries)
 
 	function formatMetaData(entry: ScheduleEntry['fields']) {
 		const data = []
@@ -25,17 +30,25 @@
 		data.push(formatMinutes(entry.durationInMinutes))
 		return data.join(' • ')
 	}
+
+	function formatDay(date: Date): string {
+		return moment(date).format('dddd')
+	}
 </script>
 
 <NavigationBar />
 
 <div class="schedule">
-	<div class="time-indicator">19:00 <span class=day>- Vrijdag</span></div>
-	{#each scheduleEntries as entry}
-		<a href="event/{entry.sys.id}">
-			<p class="title">{entry.fields.title}</p>
-			<p class="secondary">{formatMetaData(entry.fields)}</p>
-		</a>
+	{#each groups as group}
+	<div class="time-group" id={group.id}>
+		<div class="time-indicator">{moment(group.date).format('H:mm')} <span class=day>- {formatDay(group.date)}</span></div>
+		{#each group.events as entry}
+			<a href="event/{entry.sys.id}">
+				<p class="title">{entry.fields.title}</p>
+				<p class="secondary">{formatMetaData(entry.fields)}</p>
+			</a>
+		{/each}	
+	</div>	
 	{/each}
 </div>
 

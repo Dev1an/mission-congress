@@ -22,7 +22,9 @@
 
     export let event: ScheduleEntry
     export let htmlDescription: string
-    let formattedDay = moment(event.fields.startTime).format('dddd D MMMM')
+    const formattedDay = moment(event.fields.startTime).format('dddd D MMMM')
+    const formattedStartTime = moment(event.fields.start).format('H:mm')
+    const formattedEndTime = moment(event.fields.start).add(event.fields.durationInMinutes, 'minutes').format('H:mm')
 
     const isEven = num => num % 2 === 0;
 </script>
@@ -32,7 +34,7 @@
 <h1>{event.fields.title}</h1>
 <div class="time secondary">
     {formattedDay}{#if event.fields.location}, {event.fields.location.fields.name}{/if}<br>
-    19:00 - 20:00
+    {formattedStartTime} - {formattedEndTime}
 </div>
 <p class=description>{@html htmlDescription}</p>
 
