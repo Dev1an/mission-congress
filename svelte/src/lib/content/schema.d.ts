@@ -118,14 +118,14 @@ export interface IScheduleEntryFields {
   /** French */
   french: boolean;
 
-  /** Dutch */
-  dutch: boolean;
-
   /** Start time */
   startTime: string;
 
   /** Duration in minutes */
   durationInMinutes: number;
+
+  /** Description */
+  description?: Document | undefined;
 
   /** Speakers */
   speakers?: ISpeaker[] | undefined;
@@ -133,14 +133,14 @@ export interface IScheduleEntryFields {
   /** Location */
   location?: ILocation | undefined;
 
-  /** Description */
-  description?: string | undefined;
-
   /** Image */
   image?: Asset | undefined;
 
   /** Theme */
   theme?: ITheme[] | undefined;
+
+  /** Include in chapter list */
+  includeInChapterList: boolean;
 }
 
 /** An entry in the schedule */

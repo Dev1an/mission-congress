@@ -24,8 +24,8 @@
 	function hydrate(chapter: Chapter): HydratedChapter {
 		return {
 			...chapter,
-			formattedTime: moment(chapter.startTime).format('H:mm'),
-			href: chapter.eventID ? `/event/${chapter.eventID}` : '/schedule'
+			formattedTime: moment(chapter.fields.startTime).format('H:mm'),
+			href: chapter.sys.contentType.sys.id == 'scheduleEntry' ? `/event/${chapter.sys.id}` : '/schedule'
 		}
 	}
 </script>
@@ -51,7 +51,7 @@
 	}
 
 	function isOnSelectedDay(chapter: HydratedChapter): boolean {
-		return selectedDay.contains(chapter.startTime)
+		return selectedDay.contains(chapter.fields.start)
 	}
 
 	if (browser)
@@ -82,11 +82,11 @@
 			<a href={chapter.href}>
 				<div>
 					{chapter.formattedTime}
-					{#if chapter.location}
-						<span class=secondary>- {chapter.location.fields.name}</span>
+					{#if chapter.fields.location}
+						<span class=secondary>- {chapter.fields.location.fields.name}</span>
 					{/if}
 				</div>
-				<h4>{chapter.title}</h4>
+				<h4>{chapter.fields.title}</h4>
 			</a>			
 		{/each}
 	</div>

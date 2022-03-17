@@ -18,7 +18,7 @@
 
 	export let scheduleEntries: ScheduleEntry[]
 
-	function formatMetaData(entry: ScheduleEntry['content']) {
+	function formatMetaData(entry: ScheduleEntry['fields']) {
 		const data = []
 		data.push(entry.type.fields.name)
 		if (entry.theme) data.push(entry.type.fields.name)
@@ -32,9 +32,9 @@
 <div class="schedule">
 	<div class="time-indicator">19:00 <span class=day>- Vrijdag</span></div>
 	{#each scheduleEntries as entry}
-		<a href="event/{entry.meta.id}">
-			<p class="title">{entry.content.title}</p>
-			<p class="secondary">{formatMetaData(entry.content)}</p>
+		<a href="event/{entry.sys.id}">
+			<p class="title">{entry.fields.title}</p>
+			<p class="secondary">{formatMetaData(entry.fields)}</p>
 		</a>
 	{/each}
 </div>

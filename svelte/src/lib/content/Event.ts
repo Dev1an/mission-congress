@@ -1,25 +1,27 @@
-import type { Entry, Sys } from "contentful";
-import type { IScheduleEntryFields } from "./schema";
+import type { IScheduleEntry, IScheduleEntryFields } from "./schema";
 import { client } from "./client";
 
 export async function getEvent(id: string): Promise<ScheduleEntry> {
-    const response = await client.getEntry<IScheduleEntryFields>(id)
-    return hydrateScheduleEntry(response)
+    // @ts-ignore
+    const response: IScheduleEntry = await client.getEntry<IScheduleEntryFields>(id)
+    
+    return hydrateStartTime(response)
 }
 
-export type ScheduleEntry = {
-    content: Omit<IScheduleEntryFields, 'startTime'> & {
-        startTime: Date,
-    },
-    meta: Sys
+export type ScheduleEntry = HydratedStartTime<IScheduleEntry>
+
+export type HydratedStartTime<T extends {fields: {startTime: string}}> = T & {
+    fields: {
+        start: Date
+    }
 }
 
-export function hydrateScheduleEntry(description: Entry<IScheduleEntryFields>): ScheduleEntry {
+export function hydrateStartTime<T extends {fields: {startTime: string}}>(description: T): HydratedStartTime<T> {
     return {
-        content: {
+        ...description,
+        fields: {
             ...description.fields,
-            startTime: new Date(description.fields.startTime)
-        },
-        meta: description.sys,
+            start: new Date(description.fields.startTime)
+        }
     }
 }

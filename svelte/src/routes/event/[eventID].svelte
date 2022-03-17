@@ -7,7 +7,7 @@
 		return {
 			props: {
 				event,
-                htmlDescription: documentToHtmlString(event.content.description)
+                htmlDescription: documentToHtmlString(event.fields.description)
 			}
 		}
 	}
@@ -22,24 +22,23 @@
 
     export let event: ScheduleEntry
     export let htmlDescription: string
-    let formattedDay = moment(event.content.startTime).format('dddd D MMMM')
-    console.log(event.content.description)
+    let formattedDay = moment(event.fields.startTime).format('dddd D MMMM')
 
     const isEven = num => num % 2 === 0;
 </script>
 
 <NavigationBar />
 
-<h1>{event.content.title}</h1>
+<h1>{event.fields.title}</h1>
 <div class="time secondary">
-    {formattedDay}{#if event.content.location}, {event.content.location.fields.name}{/if}<br>
+    {formattedDay}{#if event.fields.location}, {event.fields.location.fields.name}{/if}<br>
     19:00 - 20:00
 </div>
 <p class=description>{@html htmlDescription}</p>
 
-{#if event.content.speakers}
+{#if event.fields.speakers}
     <h2>Sprekers</h2>
-    {#each event.content.speakers as speaker, number}
+    {#each event.fields.speakers as speaker, number}
         {@const pic = speaker.fields.profilePicture}
         {@const side = isEven(number) ? 'left':'right'}
         <div class="speaker">

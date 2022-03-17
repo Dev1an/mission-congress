@@ -1,6 +1,6 @@
 import { client } from "./client";
 import { contentTypes } from "./Endpoint description";
-import { hydrateScheduleEntry, type ScheduleEntry } from "./Event";
+import { hydrateStartTime, type ScheduleEntry } from "./Event";
 import type { IScheduleEntryFields } from "./schema";
 
 export async function getAllScheduleEntries(): Promise<ScheduleEntry[]> {
@@ -10,5 +10,6 @@ export async function getAllScheduleEntries(): Promise<ScheduleEntry[]> {
         limit: 1000
     })
 
-    return response.items.map(hydrateScheduleEntry)
+    // @ts-ignore
+    return response.items.map(hydrateStartTime)
 }

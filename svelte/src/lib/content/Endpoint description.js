@@ -7,5 +7,5 @@ export const accessTokenProperty = `access_token=${accessToken}`
 
 export const contentTypes = {
     ScheduleEntry: 'scheduleEntry',
-    ScheduleChapter: 'scheduleChapter'
+    ScheduleChapter: 'customScheduleChapterContent'
 }
