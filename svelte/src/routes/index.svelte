@@ -1,4 +1,4 @@
-<script lang="ts" context="module">	
+<script lang="ts" context="module">
 	import type { Load } from '.'
 	import moment from 'moment'
 	import '$lib/util/moment'

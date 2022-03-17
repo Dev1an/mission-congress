@@ -14,7 +14,8 @@ export interface ICustomScheduleChapterContentFields {
   startTime: string;
 }
 
-/** Content for a chapter in the schedule. When there is no suited schedule entry available use this type to show custom data in schedule chapters. Used for example to group events. */
+/** Used to group events.
+When a chapter has only one related event, consider marking the (already existing) corresponding schedule entry as chapter using its the 'mark as chapter' property instead of creating a new chapter. */
 
 export interface ICustomScheduleChapterContent
   extends Entry<ICustomScheduleChapterContentFields> {
@@ -84,39 +85,12 @@ export interface ILocation extends Entry<ILocationFields> {
   };
 }
 
-export interface IScheduleChapterFields {
-  /** Content */
-  content: ICustomScheduleChapterContent | IScheduleEntry;
-}
-
-/** Used as highlights for creating overviews of schedules. */
-
-export interface IScheduleChapter extends Entry<IScheduleChapterFields> {
-  sys: {
-    id: string;
-    type: string;
-    createdAt: string;
-    updatedAt: string;
-    locale: string;
-    contentType: {
-      sys: {
-        id: "scheduleChapter";
-        linkType: "ContentType";
-        type: "Link";
-      };
-    };
-  };
-}
-
 export interface IScheduleEntryFields {
   /** Title */
   title: string;
 
   /** Type */
   type: IEventType;
-
-  /** French */
-  french: boolean;
 
   /** Start time */
   startTime: string;
@@ -219,7 +193,6 @@ export type CONTENT_TYPE =
   | "customScheduleChapterContent"
   | "eventType"
   | "location"
-  | "scheduleChapter"
   | "scheduleEntry"
   | "speaker"
   | "theme";

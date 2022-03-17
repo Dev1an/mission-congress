@@ -1,23 +1,25 @@
 import { client } from "./client";
 import { contentTypes } from "./Endpoint description";
 import { hydrateStartTime, type HydratedStartTime, type ScheduleEntry } from "./Event";
-import type { ICustomScheduleChapterContent, ICustomScheduleChapterContentFields, IScheduleEntryFields } from "./schema";
+import type { ICustomScheduleChapterContent, ICustomScheduleChapterContentFields, IScheduleEntryFields, LOCALE_CODE } from "./schema";
 
 type DedicatedChapter = HydratedStartTime<ICustomScheduleChapterContent>
 
 export type Chapter = DedicatedChapter | ScheduleEntry
 
-export async function getAllChapters(): Promise<Chapter[]> {
+export async function getAllChapters(locale: LOCALE_CODE = 'nl-BE'): Promise<Chapter[]> {
     const eventResponsePromise = client.getEntries<IScheduleEntryFields>({
         content_type: contentTypes.ScheduleEntry,
         'fields.includeInChapterList': true,
         order: 'fields.startTime',
-        limit: 100
+        limit: 100,
+        locale
     })
 
     const chapterResponsePromise = client.getEntries<ICustomScheduleChapterContentFields>({
         content_type: contentTypes.ScheduleChapter,
-        limit: 1000
+        limit: 1000,
+        locale
     })
 
     const [eventResponse, chapterResponse] = await Promise.all([eventResponsePromise, chapterResponsePromise])
