@@ -24,7 +24,7 @@
 	function hydrate(chapter: Chapter): HydratedChapter {
 		return {
 			...chapter,
-			formattedTime: moment(chapter.fields.startTime).format('H:mm'),
+			formattedTime: moment(chapter.fields.startTime).utcOffset(60).format('H:mm'),
 			href: chapter.sys.contentType.sys.id == 'scheduleEntry' ?
 				`/event/${chapter.sys.id}` :
 				`/schedule#${idFrom(chapter.fields.start)}`

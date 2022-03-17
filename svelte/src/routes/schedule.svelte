@@ -34,6 +34,10 @@
 	function formatDay(date: Date): string {
 		return moment(date).format('dddd')
 	}
+
+	function formatTime(date: Date): string {
+		return moment(date).utcOffset(60).format('H:mm')
+	}
 </script>
 
 <NavigationBar />
@@ -41,7 +45,7 @@
 <div class="schedule">
 	{#each groups as group}
 	<div class="time-group" id={group.id}>
-		<div class="time-indicator">{moment(group.date).format('H:mm')} <span class=day>- {formatDay(group.date)}</span></div>
+		<div class="time-indicator">{formatTime(group.date)} <span class=day>- {formatDay(group.date)}</span></div>
 		{#each group.events as entry}
 			<a href="event/{entry.sys.id}">
 				<p class="title">{entry.fields.title}</p>
