@@ -56,6 +56,8 @@
 	{/each}
 </div>
 
+<div class="bottom-padding"></div>
+
 <style>
 	.schedule {
 		position: relative;
@@ -122,5 +124,9 @@
 		.schedule a:not(:last-child) {
 			border-bottom: 0.5px solid rgba(0, 0, 0, 0.233);
 		}
+	}
+
+	.bottom-padding {
+		margin-bottom: calc(100vh - 100px);
 	}
 </style>

@@ -144,6 +144,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Programma: {moment(selectedDay.mid).format('dddd')}</title>
+</svelte:head>
+
 <NavigationBar />
 
 <section class="slogan">
