@@ -167,7 +167,7 @@
 	<title>{moment(selectedDay.mid).format('dddd')}</title>
 </svelte:head>
 
-<NavigationBar />
+<NavigationBar {language} />
 
 <section class="slogan">
 	<img src={language == 'fr' ? sloganFR : sloganNl} alt="">

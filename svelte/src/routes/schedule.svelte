@@ -65,7 +65,7 @@
 	}
 </script>
 
-<NavigationBar />
+<NavigationBar {language} />
 
 <div class="schedule">
 	{#each groups as group}

@@ -53,7 +53,7 @@
     const isEven = num => num % 2 === 0;
 </script>
 
-<NavigationBar />
+<NavigationBar {language} />
 
 <h1>{event.fields.title}</h1>
 <div class="time secondary">

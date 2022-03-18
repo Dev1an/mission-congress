@@ -1,5 +1,14 @@
+<script lang="ts">
+import { locales } from "$lib/content/locale";
+
+	import type { LOCALE_CODE } from "$lib/content/schema"
+	export let language: LOCALE_CODE
+
+	const title = language == locales.french ? 'Congres Mission' : 'Missiecongres'
+</script>
+
 <nav>
-	<h3>Missie congres</h3>
+	<h3>{title}</h3>
 </nav>
 
 <style>
