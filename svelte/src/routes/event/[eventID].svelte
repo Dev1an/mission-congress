@@ -53,6 +53,10 @@
     const isEven = num => num % 2 === 0;
 </script>
 
+<svelte:head>
+    <title>{event.fields.title}</title>
+</svelte:head>
+
 <NavigationBar {language} />
 
 <h1>{event.fields.title}</h1>

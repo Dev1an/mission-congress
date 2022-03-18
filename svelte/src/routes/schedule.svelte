@@ -40,6 +40,7 @@
 	import moment from 'moment';
 	import '$lib/util/moment'
 	import type { LOCALE_CODE } from '$lib/content/schema';
+	import { locales } from '$lib/content/locale';
 
 	export let scheduleEntries: ScheduleEntry[]
 	export let language: LOCALE_CODE
@@ -47,6 +48,7 @@
 	moment.locale(language)
 
 	const groups = group(scheduleEntries)
+	const title = language == locales.french ? 'Programme' : 'Programma'
 
 	function formatMetaData(entry: ScheduleEntry['fields']) {
 		const data = []
@@ -64,6 +66,10 @@
 		return moment(date).utcOffset(60).format('H:mm')
 	}
 </script>
+
+<svelte:head>
+	<title>{title}</title>
+</svelte:head>
 
 <NavigationBar {language} />
 
