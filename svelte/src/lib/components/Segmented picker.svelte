@@ -1,6 +1,8 @@
 <script lang="ts">
-	import type { SvelteComponent } from "svelte";
+	import { createEventDispatcher, type SvelteComponent } from "svelte";
 	import Text from "$lib/components/Text.svelte";
+
+	const dispatch = createEventDispatcher()
 
 	type Element = $$Generic
 	type ID = $$Generic
@@ -17,6 +19,10 @@
 
 	function select(element: Element) {
 		selected = id(element)
+		dispatch('change', {
+			selectedElement: element,
+			selectedId: selected
+		})
 	}
 </script>
 
