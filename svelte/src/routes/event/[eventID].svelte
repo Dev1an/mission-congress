@@ -46,13 +46,16 @@
         <div class="speaker">
             {#if pic && side == 'left'}
                 <ProfilePicture {speaker} {side}/>
-            {/if}    
+            {/if}
             <div class="text {side}">
+                {#if pic == undefined}
+                <h3>{speaker.fields.name}</h3>
+                {/if}
                 <p>{@html documentToHtmlString(speaker.fields.biography)}</p>        
             </div>
             {#if pic && side == 'right'}
                 <ProfilePicture {speaker} {side}/>
-            {/if}    
+            {/if}
         </div>
     {/each}
 {/if}
@@ -65,7 +68,7 @@
         font-size: 30px;
     }
 
-    h1, h2, .time, p {
+    h1, h2, h3, .time, p {
         padding: 0 var(--horizontal-safe-area);
 		padding-left: max(var(--horizontal-safe-area), env(safe-area-inset-left));
 		padding-right: max(var(--horizontal-safe-area), env(safe-area-inset-right));
@@ -82,6 +85,10 @@
 
     h2 {
         margin: 2em 0 0.5em;
+    }
+
+    h3 {
+        font-size: 19px;
     }
 
     .speaker {
