@@ -1,13 +1,34 @@
 <script lang="ts" context="module">
 	import type { Load } from '.'
 	import { getAllScheduleEntries } from "$lib/content/Schedule entries";
+	import { getLanguage, getLanguageFromURL, setLanguageInURL } from '$lib/i18n/main';
+	import { browser, prerendering } from '$app/env';
 
-	export async function load({ params, fetch, session, stuff }: Parameters<Load>[0]) {
-		return {
+	export async function load({ url, params, fetch, session, stuff }: Parameters<Load>[0]) {
+		var targetURL = new URL(url)
+		let response = {
+			status: 200,
+			redirect: undefined,
 			props: {
-				scheduleEntries: await getAllScheduleEntries()
+				scheduleEntries: [],
+				language: getLanguage(targetURL)
 			}
-		};
+		}
+
+		const scheduleEntries = getAllScheduleEntries(response.props.language)
+
+		// Look for preferred language
+		if (!prerendering) {
+			const currentLanguage = response.props.language
+			if (getLanguageFromURL(targetURL) != currentLanguage) {
+				targetURL = setLanguageInURL(currentLanguage, targetURL)
+				response.redirect = targetURL.href
+				response.status = 302
+			}
+		}
+
+		response.props.scheduleEntries = await scheduleEntries
+		return response;
 	}
 </script>
 
@@ -18,8 +39,12 @@
 	import { group } from '$lib/util/group entries';
 	import moment from 'moment';
 	import '$lib/util/moment'
+	import type { LOCALE_CODE } from '$lib/content/schema';
 
 	export let scheduleEntries: ScheduleEntry[]
+	export let language: LOCALE_CODE
+
+	moment.locale(language)
 
 	const groups = group(scheduleEntries)
 

@@ -31,6 +31,8 @@
 			}
 		}
 
+		moment.locale(response.props.language)
+
 		// Look for preferred language
 		if (!prerendering) {
 			const currentLanguage = response.props.language
@@ -58,6 +60,16 @@
 		}
 
 		response.props.chapters = (await rawChapters).map(hydrate)
+
+		function hydrate(chapter: Chapter): HydratedChapter {
+			return {
+				...chapter,
+				formattedTime: moment(chapter.fields.startTime).utcOffset(60).format('H:mm'),
+				href: chapter.sys.contentType.sys.id == 'scheduleEntry' ?
+					`/event/${chapter.sys.id}` :
+					`/schedule?lang=${response.props.language}#${chapterIdFrom(chapter.fields.start)}`
+			}
+		}
 
 		return response
 	}
@@ -92,16 +104,6 @@
 	type HydratedChapter = Chapter & {
 		formattedTime: string,
 		href: string
-	}
-
-	function hydrate(chapter: Chapter): HydratedChapter {
-		return {
-			...chapter,
-			formattedTime: moment(chapter.fields.startTime).utcOffset(60).format('H:mm'),
-			href: chapter.sys.contentType.sys.id == 'scheduleEntry' ?
-				`/event/${chapter.sys.id}` :
-				`/schedule#${chapterIdFrom(chapter.fields.start)}`
-		}
 	}
 </script>
 
@@ -162,7 +164,7 @@
 </script>
 
 <svelte:head>
-	<title>Programma: {moment(selectedDay.mid).format('dddd')}</title>
+	<title>{moment(selectedDay.mid).format('dddd')}</title>
 </svelte:head>
 
 <NavigationBar />

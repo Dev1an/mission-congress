@@ -1,15 +1,35 @@
 <script lang="ts" context="module">
 	import type { Load } from './[eventID]'
     import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+    import { getLanguage, getLanguageFromURL, setLanguageInURL } from '$lib/i18n/main';
+    import { prerendering } from '$app/env';
 
-	export async function load({ params, fetch, session, stuff }: Parameters<Load>[0]) {
-        const event = await getEvent(params.eventID)
-		return {
+	export async function load({ url, params, fetch, session, stuff }: Parameters<Load>[0]) {
+        var targetURL = new URL(url)
+		let response = {
+			status: 200,
+			redirect: undefined,
 			props: {
-				event,
-                htmlDescription: documentToHtmlString(event.fields.description)
+				event: undefined,
+				language: getLanguage(targetURL)
 			}
 		}
+
+        const event = getEvent(params.eventID, response.props.language)
+
+		// Look for preferred language
+		if (!prerendering) {
+			const currentLanguage = response.props.language
+			if (getLanguageFromURL(targetURL) != currentLanguage) {
+				targetURL = setLanguageInURL(currentLanguage, targetURL)
+				response.redirect = targetURL.href
+				response.status = 302
+			}
+		}
+
+        response.props.event = await event
+
+		return response
 	}
 </script>
 
@@ -19,9 +39,13 @@
     import moment from 'moment'
     import '$lib/util/moment'
     import ProfilePicture from "./_profile picture.svelte"
+    import type { LOCALE_CODE } from '$lib/content/schema';
 
     export let event: ScheduleEntry
-    export let htmlDescription: string
+    export let language: LOCALE_CODE
+
+    moment.locale(language)
+    const htmlDescription = documentToHtmlString(event.fields.description)
     const formattedDay = moment(event.fields.startTime).format('dddd D MMMM')
     const formattedStartTime = moment(event.fields.start).format('H:mm')
     const formattedEndTime = moment(event.fields.start).add(event.fields.durationInMinutes, 'minutes').format('H:mm')
