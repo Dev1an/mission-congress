@@ -15,7 +15,7 @@
 	import NavigationBar from "$lib/components/Navigation bar.svelte";
 	import { formatMinutes } from '$lib/util/moment';
 	import type { ScheduleEntry } from '$lib/content/Event';
-	import { group, idFrom } from '$lib/util/group entries';
+	import { group } from '$lib/util/group entries';
 	import moment from 'moment';
 	import '$lib/util/moment'
 

@@ -35,5 +35,7 @@ export function group(events: ScheduleEntry[]): Group[] {
         }
     }
 
+    groups.push(currentGroup)
+
     return groups
 }
