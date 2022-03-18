@@ -6,27 +6,42 @@
 	import { days } from '$lib/util/march2022congresDays';
 	import { idFrom as chapterIdFrom } from '$lib/util/group entries';
 	import { browser, prerendering } from '$app/env';
+	import { getLanguage, getLanguageFromURL, setLanguageInURL } from '$lib/i18n/main';
+	import type { LOCALE_CODE } from '$lib/content/schema';
 
 	type OutputProperties = {
 		status: number,
 		redirect: string | undefined,
 		props: {
 			selectedDay: TimeRange,
-			chapters: HydratedChapter[]
+			chapters: HydratedChapter[],
+			language: LOCALE_CODE
 		}
 	}
 
 	export async function load({ url, params, fetch, session, stuff }: Parameters<Load>[0]) {
+		var targetURL = new URL(url)
 		let response = {
 			status: 200,
 			redirect: undefined,
 			props: {
 				selectedDay: days[0],
-				chapters: []
+				chapters: [],
+				language: getLanguage(targetURL)
 			}
 		}
 
-		const rawChapters = getAllChapters()
+		// Look for preferred language
+		if (!prerendering) {
+			const currentLanguage = response.props.language
+			if (getLanguageFromURL(targetURL) != currentLanguage) {
+				targetURL = setLanguageInURL(currentLanguage, targetURL)
+				response.redirect = targetURL.href
+				response.status = 302
+			}
+		}
+
+		const rawChapters = getAllChapters(response.props.language)
 
 		// Look for preffered day in URL
 		if (!prerendering && url.searchParams.has('day')) {
@@ -34,12 +49,12 @@
 			const preferredDay = days.find(day => dayString == dayIdFrom(day.mid))
 			// If specified correctly, select it, otherwise select current day if possible
 			if ( preferredDay ) {
-				setDayInOutput(preferredDay, response, url)
+				setDayInOutput(preferredDay, response, targetURL)
 			} else {
-				setCurrentDayInOutputIfPossible(response, url)
+				setCurrentDayInOutputIfPossible(response, targetURL)
 			}
 		} else {
-			setCurrentDayInOutputIfPossible(response, url)
+			setCurrentDayInOutputIfPossible(response, targetURL)
 		}
 
 		response.props.chapters = (await rawChapters).map(hydrate)
@@ -94,12 +109,14 @@
 	import { prefetch } from '$app/navigation';
 
 	import sloganNl from '$lib/assets/images/slogan/nl.jpg';
+	import sloganFR from '$lib/assets/images/slogan/fr.jpg';
 	import SegmentedPicker from '$lib/components/Segmented picker.svelte'
 	import NavigationBar from '$lib/components/Navigation bar.svelte'
 	import type { TimeRange } from '$lib/util/date';
 
 	export let selectedDay: TimeRange
 	export let chapters: HydratedChapter[]
+	export let language: LOCALE_CODE
 
 	let filteredChapters: HydratedChapter[]
 
@@ -151,7 +168,7 @@
 <NavigationBar />
 
 <section class="slogan">
-	<img src={sloganNl} alt="">
+	<img src={language == 'fr' ? sloganFR : sloganNl} alt="">
 </section>
 
 <section class="program-overview">
