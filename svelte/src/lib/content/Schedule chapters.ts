@@ -7,7 +7,7 @@ type DedicatedChapter = HydratedStartTime<ICustomScheduleChapterContent>
 
 export type Chapter = DedicatedChapter | ScheduleEntry
 
-export async function getAllChapters(locale: LOCALE_CODE = 'nl-BE'): Promise<Chapter[]> {
+export async function getAllChapters(locale: LOCALE_CODE = 'fr'): Promise<Chapter[]> {
     const eventResponsePromise = client.getEntries<IScheduleEntryFields>({
         content_type: contentTypes.ScheduleEntry,
         'fields.includeInChapterList': true,

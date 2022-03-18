@@ -1,7 +1,7 @@
 import type { IScheduleEntry, IScheduleEntryFields, LOCALE_CODE } from "./schema";
 import { client } from "./client";
 
-export async function getEvent(id: string, locale: LOCALE_CODE = 'nl-BE'): Promise<ScheduleEntry> {
+export async function getEvent(id: string, locale: LOCALE_CODE = 'fr'): Promise<ScheduleEntry> {
     // @ts-ignore
     const response: IScheduleEntry = await client.getEntry<IScheduleEntryFields>(id, {locale})
     
