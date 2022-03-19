@@ -54,7 +54,8 @@
 	function formatMetaData(entry: ScheduleEntry['fields']) {
 		const data = []
 		data.push(entry.type.fields.name)
-		if (entry.theme) data.push(entry.type.fields.name)
+		console.log(entry.theme)
+		if (entry.theme) data.push(...entry.theme.map(theme => theme.fields.name))
 		data.push(formatMinutes(entry.durationInMinutes))
 		return data.join(' • ')
 	}
