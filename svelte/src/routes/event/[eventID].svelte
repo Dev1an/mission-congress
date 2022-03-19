@@ -40,6 +40,7 @@
     import '$lib/util/moment'
     import ProfilePicture from "./_profile picture.svelte"
     import type { LOCALE_CODE } from '$lib/content/schema';
+    import LanguagePicker from '$lib/components/Language picker.svelte';
 
     export let event: ScheduleEntry
     export let language: LOCALE_CODE
@@ -87,6 +88,8 @@
         </div>
     {/each}
 {/if}
+
+<LanguagePicker {language} />
 
 <style>
     h1 {

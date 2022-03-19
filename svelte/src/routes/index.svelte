@@ -114,6 +114,7 @@
 	import sloganFR from '$lib/assets/images/slogan/fr.jpg';
 	import SegmentedPicker from '$lib/components/Segmented picker.svelte'
 	import NavigationBar from '$lib/components/Navigation bar.svelte'
+	import LanguagePicker from '$lib/components/Language picker.svelte';
 	import type { TimeRange } from '$lib/util/date';
 
 	export let selectedDay: TimeRange
@@ -197,6 +198,8 @@
 		{/each}
 	</div>
 </section>
+
+<LanguagePicker {language} />
 
 <style>
 	section.slogan {

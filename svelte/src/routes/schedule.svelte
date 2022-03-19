@@ -41,6 +41,7 @@
 	import '$lib/util/moment'
 	import type { LOCALE_CODE } from '$lib/content/schema';
 	import { locales } from '$lib/content/locale';
+	import LanguagePicker from '$lib/components/Language picker.svelte';
 
 	export let scheduleEntries: ScheduleEntry[]
 	export let language: LOCALE_CODE
@@ -86,6 +87,8 @@
 	</div>	
 	{/each}
 </div>
+
+<LanguagePicker {language} />
 
 <div class="bottom-padding"></div>
 

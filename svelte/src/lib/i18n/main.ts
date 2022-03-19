@@ -48,7 +48,7 @@ export function setLanguageInLocalStorage(language: LOCALE_CODE) {
     window.localStorage?.setItem(localStorageLanguageKey, language)
 }
 
-const urlCodes = {
+export const urlCodes = {
     dutch: 'nl',
     french: 'fr'
 }

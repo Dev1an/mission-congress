@@ -49,7 +49,7 @@
 		flex-grow: 1;
 		text-align: center;
 		margin: 2px;
-		padding: 0.45em 0.2em;
+		padding: 0.45em 2em;
 		cursor: pointer;
 	}
 
