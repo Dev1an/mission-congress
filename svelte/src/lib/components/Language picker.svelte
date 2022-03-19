@@ -25,11 +25,20 @@
 	}
 
     const descriptor = language == locales.french ? 'Langue du site' : 'Websitetaal'
+    const downloadPDF = language == locales.french ? 'Télécharger en PDF' : 'Download PDF'
+    const dailySchedule = language == locales.french ? 'Horaire quotidien & Plan' : 'Dagindeling & Grondplan'
+    const panelsAndWorkshops = language == locales.french ? 'Tables rondes & Ateliers' : 'Panels & Workshops'
+
+    import program from '$lib/assets/program.pdf'
 </script>
 
 <div class="secondary">
     {descriptor}: 
     <SegmentedPicker elements={languages} selected={selectedCode} content={element => element} id={element => element.code} on:change={selectLanguage} />
+</div>
+
+<div class="secondary downloads">
+    <a href={program}>{downloadPDF}</a>
 </div>
 
 <style>
@@ -38,5 +47,21 @@
         justify-content: center;
         align-items: center;
         gap: 0.5em;
+
+        padding: 0 var(--horizontal-safe-area);
+		padding-left: max(var(--horizontal-safe-area), env(safe-area-inset-left));
+		padding-right: max(var(--horizontal-safe-area), env(safe-area-inset-right));
+    }
+
+    .downloads {
+        font-size: 13px;
+        margin-top: 1em;
+        margin-bottom: 2em;
+        gap: 1em;
+        text-align: center;
+    }
+
+    a {
+        text-decoration: underline;
     }
 </style>
