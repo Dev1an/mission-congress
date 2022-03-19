@@ -41,6 +41,7 @@
     import ProfilePicture from "./_profile picture.svelte"
     import type { LOCALE_CODE } from '$lib/content/schema';
     import LanguagePicker from '$lib/components/Language picker.svelte';
+    import { locales } from '$lib/content/locale';
 
     export let event: ScheduleEntry
     export let language: LOCALE_CODE
@@ -52,6 +53,8 @@
     const formattedEndTime = moment(event.fields.start).add(event.fields.durationInMinutes, 'minutes').format('H:mm')
 
     const isEven = num => num % 2 === 0;
+
+    const locationDescriptor = language == locales.french ? 'Lieu' : 'Plaats'
 </script>
 
 <svelte:head>
@@ -62,10 +65,21 @@
 
 <h1>{event.fields.title}</h1>
 <div class="time secondary">
-    {formattedDay}{#if event.fields.location}, {event.fields.location.fields.name}{/if}<br>
+    {formattedDay}<br>
     {formattedStartTime} - {formattedEndTime}
 </div>
-<p class=description>{@html htmlDescription}</p>
+
+{#if event.fields.description}
+    <p class=description>{@html htmlDescription}</p>
+{/if}
+
+{#if event.fields.location}
+    <h2>{locationDescriptor}</h2>
+    <p>
+        <b>{event.fields.location.fields.name}</b><br>
+        {@html documentToHtmlString(event.fields.location.fields.description)}
+    </p>
+{/if}
 
 {#if event.fields.speakers}
     <h2>Sprekers</h2>
@@ -114,8 +128,12 @@
         line-height: 1.47059;
     }
 
+    p.description {
+        margin-bottom: 2em;
+    }
+
     h2 {
-        margin: 2em 0 0.5em;
+        margin: 1em 0 0.5em;
     }
 
     h3 {
