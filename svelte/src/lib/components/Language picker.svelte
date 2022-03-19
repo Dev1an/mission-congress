@@ -32,7 +32,7 @@
     import program from '$lib/assets/program.pdf'
 </script>
 
-<div class="secondary">
+<div class="secondary lang">
     {descriptor}: 
     <SegmentedPicker elements={languages} selected={selectedCode} content={element => element} id={element => element.code} on:change={selectLanguage} />
 </div>
@@ -42,6 +42,10 @@
 </div>
 
 <style>
+    .lang {
+        margin-top: 2em;
+    }
+
     div {
         display: flex;
         justify-content: center;

@@ -159,4 +159,8 @@
     :global(b) {
         font-weight: bold;
     }
+
+    :global(a:any-link) {
+        text-decoration: underline;
+    }
 </style>
